@@ -5,9 +5,13 @@ const Form = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  const handleInputChange = (e) => {
-    const { name, value } = 
-    }
+  handleInputChange = (e) => {
+    const { name, value } = e.currentTarget;
+
+    this.setState({
+      // [e.currentTarget.name]: e.currentTarget.number,
+      [name]: value,
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
