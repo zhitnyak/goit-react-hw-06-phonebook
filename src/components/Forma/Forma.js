@@ -5,7 +5,7 @@ const Form = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  handleInputChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.currentTarget;
 
     this.setState({
