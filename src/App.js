@@ -14,7 +14,6 @@ const initialContacts = [
 
 function App() {
   const [contacts, setContacts] = useState(initialContacts);
-  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     const localContacts = JSON.parse(localStorage.getItem("contacts"));
@@ -40,22 +39,18 @@ function App() {
     }
   };
 
-  const changeFilter = (e) => {
-    setFilter(e.currentTarget.value);
-  };
+  // const getVisibleContacts = () => {
+  //   const normalizedFilter = filter.toLowerCase();
+  //   return contacts.filter((contact) =>
+  //     contact.name.toLowerCase().includes(normalizedFilter)
+  //   );
+  // };
 
-  const getVisibleContacts = () => {
-    const normalizedFilter = filter.toLowerCase();
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-  };
-
-  const deleteContact = (contactId) => {
-    setContacts((prevState) =>
-      prevState.filter((contact) => contact.id !== contactId)
-    );
-  };
+  // const deleteContact = (contactId) => {
+  //   setContacts((prevState) =>
+  //     prevState.filter((contact) => contact.id !== contactId)
+  //   );
+  // };
 
   return (
     <>
@@ -63,10 +58,8 @@ function App() {
         <h1 className="title">Phonebook</h1>
         <Form onSubmit={addContact} />
         <h2 className="title">Contacts</h2>
-        {contacts.length === 0 ? null : (
-          <Filter value={filter} onChange={changeFilter} />
-        )}
-        <ContactList contacts={getVisibleContacts()} onChange={deleteContact} />
+        <Filter />
+        {/* <ContactList contacts={getVisibleContacts()} onChange={deleteContact} /> */}
       </section>
     </>
   );
