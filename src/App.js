@@ -39,19 +39,6 @@ function App() {
     }
   };
 
-  // const getVisibleContacts = () => {
-  //   const normalizedFilter = filter.toLowerCase();
-  //   return contacts.filter((contact) =>
-  //     contact.name.toLowerCase().includes(normalizedFilter)
-  //   );
-  // };
-
-  // const deleteContact = (contactId) => {
-  //   setContacts((prevState) =>
-  //     prevState.filter((contact) => contact.id !== contactId)
-  //   );
-  // };
-
   return (
     <>
       <section className="wrapper">
@@ -59,7 +46,7 @@ function App() {
         <Form onSubmit={addContact} />
         <h2 className="title">Contacts</h2>
         <Filter />
-        {/* <ContactList contacts={getVisibleContacts()} onChange={deleteContact} /> */}
+        <ContactList />
       </section>
     </>
   );

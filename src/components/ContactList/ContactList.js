@@ -1,29 +1,37 @@
-import React from "react";
-import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { removeContact } from "../../redux/contacts/contacts-actions";
 import css from "./ContactList.module.css";
 
-const ContactList = ({ contacts, onChange }) => {
+function ContactList() {
+  const contacts = useSelector((state) => state.items);
+  const filter = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
+
+  function getVisibleContacts() {
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  }
+
+  const visibleContacts = getVisibleContacts();
   return (
     <ul className={css.list}>
-      {contacts.length > 0 &&
-        contacts.map(({ id, name, number }) => (
+      {visibleContacts &&
+        visibleContacts.map(({ id, name, number }) => (
           <li className={css.item} key={id}>
             {`${name}: ${number}`}
             <button
               className={css.btn}
               type="button"
-              onClick={() => onChange(id)}
+              onClick={() => dispatch(removeContact(id))}
             >
-              Delete
+              delete
             </button>
           </li>
         ))}
     </ul>
   );
-};
+}
 
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
 export default ContactList;
