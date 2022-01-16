@@ -1,18 +1,29 @@
 import { useSelector, useDispatch } from "react-redux";
 import { removeContact } from "../../redux/contacts/contacts-actions";
+import { filter } from "../../redux/filter/filter-actions";
 import css from "./ContactList.module.css";
+import { useEffect, useCallback } from "react";
 
 function ContactList() {
   const contacts = useSelector((state) => state.items);
-  const filter = useSelector((state) => state.filter);
+  const filterValue = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
-  function getVisibleContacts() {
-    const normalizedFilter = filter.toLowerCase();
+  function handleRemove(id) {
+    dispatch(removeContact(id));
+  }
+  const getVisibleContacts = useCallback(() => {
+    const normalizedFilter = filterValue.toLowerCase();
     return contacts.filter((contact) =>
       contact.name.toLowerCase().includes(normalizedFilter)
     );
-  }
+  }, [contacts, filterValue]);
+
+  useEffect(() => {
+    if (getVisibleContacts().length === 0 && filterValue !== "") {
+      dispatch(filter(""));
+    }
+  }, [getVisibleContacts, dispatch]);
 
   const visibleContacts = getVisibleContacts();
   return (
@@ -24,7 +35,7 @@ function ContactList() {
             <button
               className={css.btn}
               type="button"
-              onClick={() => dispatch(removeContact(id))}
+              onClick={() => handleRemove(id)}
             >
               delete
             </button>
